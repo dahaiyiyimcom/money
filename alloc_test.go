@@ -71,3 +71,21 @@ func TestAllocateProportional_EmptyOrZero(t *testing.T) {
 		t.Fatalf("expected [0], got=%v", got)
 	}
 }
+
+func TestAllocateProportional_WithNegativeBase(t *testing.T) {
+	bases := []money.Amount{
+		money.NewMinor(-1000),
+		money.NewMinor(2000),
+	}
+	discount := money.NewMinor(100)
+
+	out := money.AllocateProportional(bases, discount)
+
+	var sum int64
+	for _, v := range out {
+		sum += v.Minor()
+	}
+	if sum != 100 {
+		t.Fatalf("sum got=%d want=100", sum)
+	}
+}

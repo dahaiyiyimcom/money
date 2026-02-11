@@ -55,3 +55,24 @@ func TestParseString_Errors(t *testing.T) {
 		}
 	}
 }
+
+// Parse edge tests
+func TestParseString_LeadingDot(t *testing.T) {
+	a, err := money.ParseString(".50")
+	if err != nil {
+		t.Fatalf("err: %v", err)
+	}
+	if a.Minor() != 50 {
+		t.Fatalf("got=%d want=50", a.Minor())
+	}
+}
+
+func TestParseString_TrailingDot(t *testing.T) {
+	a, err := money.ParseString("12.")
+	if err != nil {
+		t.Fatalf("err: %v", err)
+	}
+	if a.Minor() != 1200 {
+		t.Fatalf("got=%d want=1200", a.Minor())
+	}
+}

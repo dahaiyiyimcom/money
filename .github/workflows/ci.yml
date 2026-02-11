@@ -18,3 +18,11 @@ jobs:
 
       - run: go test ./... -count=1
       - run: go vet ./...
+      - run: go test ./... -count=1 -race
+      - run: go test ./... -count=1 -cover
+      - run: go test -bench=. -benchmem ./... # opsiyonel (PR'da biraz yavaşlatır)
+
+      - name: Fuzz (short)
+        run: go test ./... -fuzz=FuzzParseString -fuzztime=10s
+
+

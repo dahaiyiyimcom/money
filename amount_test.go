@@ -43,3 +43,15 @@ func TestAmount_Arithmetic(t *testing.T) {
 		t.Fatalf("MulQty got=%d want=3702", got)
 	}
 }
+
+func TestAmount_IsNegative(t *testing.T) {
+	if money.NewMinor(0).IsNegative() {
+		t.Fatalf("0 should not be negative")
+	}
+	if money.NewMinor(1).IsNegative() {
+		t.Fatalf("positive should not be negative")
+	}
+	if !money.NewMinor(-1).IsNegative() {
+		t.Fatalf("negative should be negative")
+	}
+}

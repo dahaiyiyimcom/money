@@ -40,3 +40,20 @@ func TestAmount_JSONUnmarshal_Invalid(t *testing.T) {
 		t.Fatalf("expected error, got nil")
 	}
 }
+
+func TestAmount_UnmarshalJSON_NonString(t *testing.T) {
+	var a money.Amount
+	// price is a number, but we only accept string
+	err := json.Unmarshal([]byte(`12.34`), &a)
+	if err == nil {
+		t.Fatalf("expected error, got nil")
+	}
+}
+
+func TestAmount_UnmarshalJSON_InvalidString(t *testing.T) {
+	var a money.Amount
+	err := json.Unmarshal([]byte(`"12.345"`), &a)
+	if err == nil {
+		t.Fatalf("expected error, got nil")
+	}
+}
